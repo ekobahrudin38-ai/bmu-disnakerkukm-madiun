@@ -1,0 +1,20 @@
+# Test files
+test-*.html
+test.html
+
+# Demo files (optional - uncomment if you don't want demo in production)
+# index-demo.html
+# script-demo.js
+
+# Development files
+.env
+.env.local
+.env.development
+
+# Documentation
+*.md
+!README.md
+
+# Backup files
+*.bak
+*.backup

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Data Persistence - BMU DisnakerKUKM</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 2px solid #e74c3c;
+            border-radius: 8px;
+            background-color: #fdf2f2;
+        }
+        .test-section.success {
+            border-color: #27ae60;
+            background-color: #f2fdf2;
+        }
+        .test-step {
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            border-left: 4px solid #3498db;
+        }
+        .critical {
+            background-color: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px 5px;
+        }
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        .btn.success {
+            background-color: #27ae60;
+        }
+        .btn.danger {
+            background-color: #e74c3c;
+        }
+        .status {
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 3px;
+        }
+        .status.pass {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .status.fail {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .status.pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test Data Persistence BMU</h1>
+        
+        <div class="critical">
+            <h3>🚨 MASALAH YANG DIPERBAIKI</h3>
+            <p><strong>Sebelumnya:</strong> Data hilang setelah logout karena hanya disimpan di memori JavaScript</p>
+            <p><strong>Sekarang:</strong> Data disimpan ke database Supabase dan persisten</p>
+        </div>
+
+        <div class="test-section" id="test1">
+            <h3>📝 Test 1: Input Data Baru</h3>
+            <div class="test-step">
+                <strong>Langkah:</strong>
+                <ol>
+                    <li>Buka sistem BMU: <a href="bmu-login.html" class="btn">Login BMU</a></li>
+                    <li>Login dengan kredensial: BMU-Madiun08 / BMU-Madiun08</li>
+                    <li>Masuk ke menu "Data IKM Binaan"</li>
+                    <li>Klik "Tambah Data IKM"</li>
+                    <li>Isi semua field dengan data test</li>
+                    <li>Klik "Simpan"</li>
+                </ol>
+            </div>
+            <div class="test-step">
+                <strong>Expected Result:</strong>
+                <ul>
+                    <li>✅ Muncul alert: "Data IKM berhasil ditambahkan dan <strong>disimpan ke database!</strong>"</li>
+                    <li>✅ Data muncul di tabel IKM</li>
+                    <li>✅ Tidak ada error di console browser</li>
+                </ul>
+            </div>
+            <div class="test-step">
+                <strong>Status:</strong> <span class="status pending" id="status1">PENDING - Belum ditest</span>
+            </div>
+        </div>
+
+        <div class="test-section" id="test2">
+            <h3>🔄 Test 2: Data Persistence Setelah Logout</h3>
+            <div class="test-step">
+                <strong>Langkah:</strong>
+                <ol>
+                    <li>Setelah input data di Test 1</li>
+                    <li>Klik "Logout" di sistem BMU</li>
+                    <li>Login kembali dengan kredensial yang sama</li>
+                    <li>Masuk ke menu "Data IKM Binaan"</li>
+                    <li>Cek apakah data yang diinput masih ada</li>
+                </ol>
+            </div>
+            <div class="test-step">
+                <strong>Expected Result:</strong>
+                <ul>
+                    <li>✅ Data yang diinput di Test 1 <strong>MASIH ADA</strong></li>
+                    <li>✅ Data tidak hilang setelah logout</li>
+                    <li>✅ Semua field data masih lengkap</li>
+                </ul>
+            </div>
+            <div class="test-step">
+                <strong>Status:</strong> <span class="status pending" id="status2">PENDING - Belum ditest</span>
+            </div>
+        </div>
+
+        <div class="test-section" id="test3">
+            <h3>🗄️ Test 3: Verifikasi Database Supabase</h3>
+            <div class="test-step">
+                <strong>Langkah:</strong>
+                <ol>
+                    <li>Buka Supabase Dashboard: <a href="https://supabase.com/dashboard" target="_blank" class="btn">Supabase Dashboard</a></li>
+                    <li>Login dan pilih project BMU</li>
+                    <li>Masuk ke "Table Editor"</li>
+                    <li>Buka tabel "penerima_bmu"</li>
+                    <li>Cari data yang diinput di Test 1</li>
+                </ol>
+            </div>
+            <div class="test-step">
+                <strong>Expected Result:</strong>
+                <ul>
+                    <li>✅ Data test muncul di tabel "penerima_bmu"</li>
+                    <li>✅ Semua field terisi dengan benar</li>
+                    <li>✅ Ada timestamp "created_at"</li>
+                </ul>
+            </div>
+            <div class="test-step">
+                <strong>Status:</strong> <span class="status pending" id="status3">PENDING - Belum ditest</span>
+            </div>
+        </div>
+
+        <div class="test-section" id="test4">
+            <h3>✏️ Test 4: Edit dan Delete Data</h3>
+            <div class="test-step">
+                <strong>Langkah:</strong>
+                <ol>
+                    <li>Edit data yang diinput di Test 1</li>
+                    <li>Ubah beberapa field</li>
+                    <li>Simpan perubahan</li>
+                    <li>Cek di Supabase apakah data terupdate</li>
+                    <li>Hapus data (pindah ke Recycle Bin)</li>
+                    <li>Cek di Supabase apakah data terhapus</li>
+                </ol>
+            </div>
+            <div class="test-step">
+                <strong>Expected Result:</strong>
+                <ul>
+                    <li>✅ Edit: Muncul alert "diupdate dan disimpan ke database"</li>
+                    <li>✅ Data terupdate di Supabase</li>
+                    <li>✅ Delete: Data terhapus dari Supabase</li>
+                    <li>✅ Data masuk ke Recycle Bin lokal</li>
+                </ul>
+            </div>
+            <div class="test-step">
+                <strong>Status:</strong> <span class="status pending" id="status4">PENDING - Belum ditest</span>
+            </div>
+        </div>
+
+        <div class="critical">
+            <h3>📊 Data Test yang Disarankan</h3>
+            <p><strong>NIB:</strong> 1234567890123</p>
+            <p><strong>NIK:</strong> 3201234567890123</p>
+            <p><strong>Nama:</strong> TEST DATA PERSISTENCE</p>
+            <p><strong>Nama Usaha:</strong> Test Usaha Persistence</p>
+            <p><strong>Alamat:</strong> Jl. Test Persistence No. 123</p>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="bmu-login.html" class="btn success">🚀 Mulai Test BMU</a>
+            <a href="https://supabase.com/dashboard" target="_blank" class="btn">🗄️ Buka Supabase</a>
+        </div>
+
+        <div style="margin-top: 30px; padding: 20px; background-color: #e8f4fd; border-radius: 5px;">
+            <h4>📝 Catatan Penting:</h4>
+            <ul>
+                <li>Test ini memverifikasi bahwa masalah "data hilang setelah logout" sudah diperbaiki</li>
+                <li>Jika ada test yang gagal, berarti masih ada bug yang perlu diperbaiki</li>
+                <li>Pastikan koneksi internet stabil saat testing</li>
+                <li>Buka Developer Console (F12) untuk melihat error jika ada</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Simple test status tracker
+        function updateStatus(testId, status, message) {
+            const statusElement = document.getElementById(`status${testId}`);
+            const testSection = document.getElementById(`test${testId}`);
+            
+            statusElement.className = `status ${status}`;
+            statusElement.textContent = message;
+            
+            if (status === 'pass') {
+                testSection.classList.add('success');
+            } else if (status === 'fail') {
+                testSection.classList.remove('success');
+            }
+        }
+
+        // Example usage (manual testing)
+        console.log('Test Data Persistence BMU loaded');
+        console.log('Gunakan updateStatus(testId, "pass"/"fail", "message") untuk update status test');
+    </script>
+</body>
+</html>

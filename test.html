@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Database Siswa</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-info { background: #e8f5e8; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+        .error { background: #ffe6e6; color: #d00; }
+        .success { background: #e8f5e8; color: #080; }
+    </style>
+</head>
+<body>
+    <h1>Test Database Siswa</h1>
+    
+    <div class="test-info">
+        <h3>Status Test:</h3>
+        <div id="testStatus">Loading...</div>
+    </div>
+    
+    <div>
+        <h3>Data Siswa:</h3>
+        <div id="dataDisplay">Loading...</div>
+    </div>
+    
+    <div style="margin-top: 20px;">
+        <a href="index.html" style="background: #2c9f8f; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
+            Buka Aplikasi Utama
+        </a>
+    </div>
+
+    <script>
+        // Test data dummy
+        function getDummyData() {
+            return [
+                {
+                    id: 1,
+                    nama_siswa: 'ABDUL LATIF',
+                    jenis_kelamin: 'L',
+                    tempat_lahir: 'BLRAU',
+                    tanggal_lahir: '2004-04-16',
+                    nis_lokal: '131265010003190',
+                    no_nisn: '0014451499',
+                    kelas: '12-IPS'
+                },
+                {
+                    id: 2,
+                    nama_siswa: 'BADARIANSYAH',
+                    jenis_kelamin: 'L',
+                    tempat_lahir: 'Tanjung Palas',
+                    tanggal_lahir: '2003-12-26',
+                    nis_lokal: '131265010003191',
+                    no_nisn: '0037436759',
+                    kelas: '12-IPS'
+                }
+            ];
+        }
+
+        // Test function
+        function runTest() {
+            const testStatus = document.getElementById('testStatus');
+            const dataDisplay = document.getElementById('dataDisplay');
+            
+            try {
+                const dummyData = getDummyData();
+                
+                if (dummyData && dummyData.length > 0) {
+                    testStatus.innerHTML = '<span class="success">✅ Data dummy berhasil dimuat!</span>';
+                    
+                    let html = '<table border="1" style="border-collapse: collapse; width: 100%;">';
+                    html += '<tr><th>ID</th><th>Nama</th><th>JK</th><th>Tempat Lahir</th><th>Tanggal Lahir</th><th>Kelas</th></tr>';
+                    
+                    dummyData.forEach(siswa => {
+                        html += `<tr>
+                            <td>${siswa.id}</td>
+                            <td>${siswa.nama_siswa}</td>
+                            <td>${siswa.jenis_kelamin}</td>
+                            <td>${siswa.tempat_lahir}</td>
+                            <td>${siswa.tanggal_lahir}</td>
+                            <td>${siswa.kelas}</td>
+                        </tr>`;
+                    });
+                    
+                    html += '</table>';
+                    dataDisplay.innerHTML = html;
+                } else {
+                    testStatus.innerHTML = '<span class="error">❌ Data dummy tidak ditemukan!</span>';
+                    dataDisplay.innerHTML = 'Tidak ada data';
+                }
+            } catch (error) {
+                testStatus.innerHTML = '<span class="error">❌ Error: ' + error.message + '</span>';
+                dataDisplay.innerHTML = 'Error loading data';
+            }
+        }
+
+        // Run test when page loads
+        document.addEventListener('DOMContentLoaded', runTest);
+    </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+{
+  "rewrites": [
+    {
+      "source": "/login",
+      "destination": "/bmu-login.html"
+    },
+    {
+      "source": "/dashboard",
+      "destination": "/bmu-index.html"
+    },
+    {
+      "source": "/demo",
+      "destination": "/index-demo.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    }
+  ]
+}

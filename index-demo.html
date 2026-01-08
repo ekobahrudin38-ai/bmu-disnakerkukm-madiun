@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Siswa - Demo</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Database Siswa Aktif</h1>
+            <div class="user-info">
+                <span>Nasrulloh</span>
+                <span class="role">Akses "admin"</span>
+            </div>
+        </header>
+
+        <nav class="sidebar">
+            <ul>
+                <li><a href="#" class="active">Dashboard</a></li>
+                <li><a href="#">Kelembagaan</a></li>
+                <li><a href="#">Akademik</a></li>
+                <li><a href="#">Administrasi</a></li>
+                <li><a href="#">Data Siswa</a></li>
+                <li><a href="#">Data Alumni</a></li>
+                <li><a href="#">Data PPDB</a></li>
+            </ul>
+            <div class="version">Versi V.1.0(02/09/21)</div>
+        </nav>
+
+        <main class="content">
+            <div class="data-header">
+                <h2>Data Siswa Aktif</h2>
+                <div class="actions">
+                    <button id="downloadBtn" class="btn btn-primary">📥 Download</button>
+                    <button id="importBtn" class="btn btn-info">📤 Import</button>
+                    <button id="addBtn" class="btn btn-success">➕ Tambah</button>
+                    <button id="tableBtn" class="btn btn-warning">📊 Tabel</button>
+                </div>
+            </div>
+
+            <div class="table-controls">
+                <div class="export-options">
+                    <button class="export-btn">Copy</button>
+                    <button class="export-btn">CSV</button>
+                    <button class="export-btn">Excel</button>
+                    <button class="export-btn">PDF</button>
+                    <button class="export-btn">Print</button>
+                </div>
+                <div class="search-box">
+                    <label>Search:</label>
+                    <input type="text" id="searchInput" placeholder="Cari data siswa...">
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table id="siswaTable">
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" id="selectAll"></th>
+                            <th>No</th>
+                            <th>Nama Siswa</th>
+                            <th>JK</th>
+                            <th>Tempat_Lahir</th>
+                            <th>Tanggal_Lahir</th>
+                            <th>NIS Lokal</th>
+                            <th>No NISN</th>
+                            <th>Kelas</th>
+                            <th>Photo</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="siswaTableBody">
+                        <!-- Data akan dimuat dari JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination">
+                <div class="pagination-info">
+                    Showing <span id="showingStart">1</span> to <span id="showingEnd">10</span> of <span id="totalEntries">0</span> entries
+                </div>
+                <div class="pagination-controls">
+                    <button id="prevBtn">Previous</button>
+                    <button id="nextBtn">Next</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal untuk Add/Edit Siswa -->
+    <div id="siswaModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3 id="modalTitle">Tambah Data Siswa</h3>
+            <form id="siswaForm">
+                <div class="form-group">
+                    <label>Nama Siswa:</label>
+                    <input type="text" id="namaSiswa" required>
+                </div>
+                <div class="form-group">
+                    <label>Jenis Kelamin:</label>
+                    <select id="jenisKelamin" required>
+                        <option value="">Pilih...</option>
+                        <option value="L">Laki-laki</option>
+                        <option value="P">Perempuan</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Tempat Lahir:</label>
+                    <input type="text" id="tempatLahir" required>
+                </div>
+                <div class="form-group">
+                    <label>Tanggal Lahir:</label>
+                    <input type="date" id="tanggalLahir" required>
+                </div>
+                <div class="form-group">
+                    <label>NIS Lokal:</label>
+                    <input type="text" id="nisLokal" required>
+                </div>
+                <div class="form-group">
+                    <label>No NISN:</label>
+                    <input type="text" id="noNisn" required>
+                </div>
+                <div class="form-group">
+                    <label>Kelas:</label>
+                    <input type="text" id="kelas" required>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Batal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script-demo.js"></script>
+</body>
+</html>

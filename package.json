@@ -1,0 +1,27 @@
+{
+  "name": "database-bmu-disnakerkukm",
+  "version": "1.0.0",
+  "description": "Aplikasi web untuk mengelola data penerima Bantuan Modal Usaha (BMU) DisnakerKUKM Kota Madiun dengan Supabase dan Vercel",
+  "main": "bmu-login.html",
+  "scripts": {
+    "dev": "python -m http.server 8000",
+    "build": "echo 'Static site, no build needed'",
+    "start": "echo 'Static site deployed'"
+  },
+  "keywords": [
+    "bmu",
+    "disnakerkukm",
+    "madiun",
+    "bantuan-modal-usaha",
+    "ikm",
+    "supabase",
+    "vercel",
+    "crud"
+  ],
+  "author": "DisnakerKUKM Kota Madiun",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/database-bmu-disnakerkukm.git"
+  }
+}

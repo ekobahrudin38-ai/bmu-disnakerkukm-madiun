@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Export BMU</title>
+</head>
+<body>
+    <h1>Test Export Functionality</h1>
+    
+    <div>
+        <h2>Test Export IKM Binaan</h2>
+        <button onclick="testExportIKM()">Test Export IKM</button>
+        <p id="ikmResult"></p>
+    </div>
+    
+    <div>
+        <h2>Test Export Laporan</h2>
+        <button onclick="testGenerateReport()">Generate Test Report</button>
+        <button onclick="testExportReport()">Test Export Report</button>
+        <p id="reportResult"></p>
+    </div>
+
+    <script>
+        // Simulate BMU data
+        let filteredIKMData = [
+            {
+                id: 1,
+                nib: '1234567890123',
+                nik: '3201234567890123',
+                kk: '3201234567890123',
+                nama: 'AHMAD SURYADI',
+                alamat: 'Jl. Merdeka No. 123, Bandung',
+                tempatLahir: 'Bandung',
+                tanggalLahir: '1985-05-15',
+                jenisKelamin: 'L',
+                namaUsaha: 'Toko Sembako Berkah',
+                bantuan: 'Bantuan Modal UMKM Tahap 1',
+                tahun: 2023,
+                status: 'active',
+                isDuplicate: false
+            }
+        ];
+
+        // Copy functions from bmu-script.js
+        function convertToCSV(data) {
+            if (data.length === 0) return '';
+            
+            const headers = Object.keys(data[0]);
+            const csvHeaders = headers.join(',');
+            
+            const csvRows = data.map(row => 
+                headers.map(header => {
+                    const value = row[header];
+                    if (typeof value === 'string' && (value.includes(',') || value.includes('"') || value.includes('\n'))) {
+                        return `"${value.replace(/"/g, '""')}"`;
+                    }
+                    return value;
+                }).join(',')
+            );
+            
+            const BOM = '\uFEFF';
+            return BOM + [csvHeaders, ...csvRows].join('\n');
+        }
+
+        function downloadFile(content, filename, contentType) {
+            const blob = new Blob([content], { type: contentType + ';charset=utf-8' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.style.display = 'none';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return '';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('id-ID');
+        }
+
+        function exportToExcel() {
+            if (!filteredIKMData || filteredIKMData.length === 0) {
+                alert('Tidak ada data untuk diekspor. Pastikan ada data IKM yang tersedia.');
+                return;
+            }
+            
+            const data = filteredIKMData.map((ikm, index) => ({
+                'No': index + 1,
+                'NIB': ikm.nib,
+                'NIK': ikm.nik,
+                'Nomor KK': ikm.kk,
+                'Nama Lengkap': ikm.nama,
+                'Alamat Lengkap': ikm.alamat,
+                'Tempat Lahir': ikm.tempatLahir,
+                'Tanggal Lahir': formatDate(ikm.tanggalLahir),
+                'Jenis Kelamin': ikm.jenisKelamin === 'L' ? 'Laki-laki' : 'Perempuan',
+                'Nama Usaha': ikm.namaUsaha,
+                'Bantuan Modal Usaha': ikm.bantuan,
+                'Tahun': ikm.tahun,
+                'Status': ikm.isDuplicate ? 'Duplikat' : 'Normal'
+            }));
+            
+            const csv = convertToCSV(data);
+            const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
+            downloadFile(csv, `data-ikm-binaan-${timestamp}.csv`, 'text/csv');
+            alert(`Data berhasil diekspor ke Excel! Total: ${data.length} data`);
+        }
+
+        function exportReportToExcel() {
+            if (!window.currentReportData || window.currentReportData.length === 0) {
+                alert('Tidak ada data laporan untuk diekspor. Silakan generate laporan terlebih dahulu.');
+                return;
+            }
+            
+            const data = window.currentReportData.map((ikm, index) => ({
+                'No': index + 1,
+                'NIB': ikm.nib,
+                'NIK': ikm.nik,
+                'Nomor KK': ikm.kk,
+                'Nama Lengkap': ikm.nama,
+                'Alamat Lengkap': ikm.alamat,
+                'Tempat Lahir': ikm.tempatLahir,
+                'Tanggal Lahir': formatDate(ikm.tanggalLahir),
+                'Jenis Kelamin': ikm.jenisKelamin === 'L' ? 'Laki-laki' : 'Perempuan',
+                'Nama Usaha': ikm.namaUsaha,
+                'Bantuan Modal Usaha': ikm.bantuan,
+                'Tahun': ikm.tahun,
+                'Status': ikm.isDuplicate ? 'Duplikat' : 'Normal'
+            }));
+            
+            const csv = convertToCSV(data);
+            const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
+            downloadFile(csv, `laporan-bmu-disnakerkukm-${timestamp}.csv`, 'text/csv');
+            alert('Laporan berhasil diekspor ke Excel (format CSV)!');
+        }
+
+        // Test functions
+        function testExportIKM() {
+            try {
+                exportToExcel();
+                document.getElementById('ikmResult').innerHTML = '<span style="color: green;">✅ Export IKM berhasil!</span>';
+            } catch (error) {
+                document.getElementById('ikmResult').innerHTML = '<span style="color: red;">❌ Export IKM gagal: ' + error.message + '</span>';
+            }
+        }
+
+        function testGenerateReport() {
+            window.currentReportData = filteredIKMData;
+            document.getElementById('reportResult').innerHTML = '<span style="color: blue;">📊 Report data generated</span>';
+        }
+
+        function testExportReport() {
+            try {
+                exportReportToExcel();
+                document.getElementById('reportResult').innerHTML = '<span style="color: green;">✅ Export Report berhasil!</span>';
+            } catch (error) {
+                document.getElementById('reportResult').innerHTML = '<span style="color: red;">❌ Export Report gagal: ' + error.message + '</span>';
+            }
+        }
+    </script>
+</body>
+</html>
